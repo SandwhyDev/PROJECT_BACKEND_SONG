@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Users{
-  id                    Int         @id @default(autoincrement())
+  @@id([nama])
   nama                  String
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
@@ -19,7 +19,9 @@ model Users{
  //relasi
 
  tracks                  Songs[] 
- Playlist                  Playlist[]
+ Playlist                Playlist[]
+ albums                   Albums[]
+ like                    Like?
 }
 
 model Songs{
@@ -31,11 +33,13 @@ model Songs{
   updatedAt             DateTime    @updatedAt
 
   //relasi
-  user_id               Int
-  user                  Users       @relation(fields: [user_id], references: [id])
+  user_id               String
+  user                  Users       @relation(fields: [user_id], references: [nama])
 
 
   playlist              Playlist[]
+  // album                 Album[]
+  like                  Like?
 
 }
 
@@ -46,10 +50,47 @@ model Playlist{
   updatedAt             DateTime    @updatedAt
 
   //relasi
-  user_id               Int
-  user                  Users       @relation(fields: [user_id], references: [id])
+  user_id               String
+  user                  Users       @relation(fields: [user_id], references: [nama])
 
   song_id               Int
   song                  Songs       @relation(fields: [song_id], references: [id])
 
+}
+
+model Albums{
+  id                    Int         @id @default(autoincrement())
+  nama                  String      @unique
+  
+  
+  //relasi
+  user_id               String
+  // song_id               Int
+
+  user                  Users       @relation(fields: [user_id], references: [nama])
+  song                  Albums_song[]
+
+}
+
+model Albums_song{
+  id                    Int         @id @default(autoincrement())
+  filename              String
+  song_path             String
+  
+  //relasi
+  albums_id              Int
+
+
+  albums                Albums      @relation(fields: [albums_id], references: [id])
+}
+
+model Like{
+  id                    Int          @id  @default(autoincrement())
+
+  //relasi
+  song_id               Int           @unique
+  from_id               String        @unique
+
+  song                  Songs         @relation(fields: [song_id], references: [id])
+  from                  Users         @relation(fields: [from_id], references: [nama])
 }

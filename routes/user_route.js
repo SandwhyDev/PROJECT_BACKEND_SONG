@@ -32,7 +32,8 @@ user.get("/user_read_all", async(req, res)=>{
         const result = await ps.users.findMany({
             include : {
                 tracks : true,
-                Playlist : true
+                Playlist : true,
+                albums  : true
             }
         })
         res.json({
@@ -48,13 +49,13 @@ user.get("/user_read_all", async(req, res)=>{
     }
 })
 
-user.put("/user_update/:id", form_data.none(), async(req, res)=>{
+user.put("/user_update/nama", form_data.none(), async(req, res)=>{
     try {
-        const {id} = await req.params
+        const {nama} = await req.params
         const data = await req.body
         const result = await ps.users.update({
             where : {
-                id : parseInt(id)
+                id : parseInt(nama)
             },
             data : {
                 nama : data.nama

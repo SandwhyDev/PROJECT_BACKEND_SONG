@@ -4,6 +4,8 @@ import env from "dotenv"
 import { user } from "./routes/user_route"
 import { song } from "./routes/song_route"
 import { playlist } from "./routes/playlist"
+import { album } from "./routes/album_route"
+import { song_album } from "./routes/albumSong_route"
 env.config()
 
 const app = express()
@@ -18,9 +20,11 @@ app.use(express.urlencoded({extended : false}))
 app.use("/api", user)
 app.use("/api", song)
 app.use("/api", playlist)
+app.use("/api", album)
+app.use("/api", song_album)
 
 
 //listener
 app.listen(PORT, ()=>{
-    console.log(`listened to port `);
+    console.log(`listened to port ${PORT}`);
 })
