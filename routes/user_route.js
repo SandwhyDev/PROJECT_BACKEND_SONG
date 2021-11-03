@@ -33,7 +33,8 @@ user.get("/user_read_all", async(req, res)=>{
             include : {
                 tracks : true,
                 Playlist : true,
-                albums  : true
+                albums  : true,
+                like : true
             }
         })
         res.json({

@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Users{
-  @@id([nama])
+  id                    Int         @id @default(autoincrement())
   nama                  String
   createdAt             DateTime    @default(now())
   updatedAt             DateTime    @updatedAt
@@ -33,8 +33,10 @@ model Songs{
   updatedAt             DateTime    @updatedAt
 
   //relasi
-  user_id               String
-  user                  Users       @relation(fields: [user_id], references: [nama])
+  user_id               Int
+
+  
+  user                  Users       @relation(fields: [user_id], references: [id])
 
 
   playlist              Playlist[]
@@ -50,8 +52,8 @@ model Playlist{
   updatedAt             DateTime    @updatedAt
 
   //relasi
-  user_id               String
-  user                  Users       @relation(fields: [user_id], references: [nama])
+  user_id               Int
+  user                  Users       @relation(fields: [user_id], references: [id])
 
   song_id               Int
   song                  Songs       @relation(fields: [song_id], references: [id])
@@ -64,10 +66,10 @@ model Albums{
   
   
   //relasi
-  user_id               String
+  user_id               Int
   // song_id               Int
 
-  user                  Users       @relation(fields: [user_id], references: [nama])
+  user                  Users       @relation(fields: [user_id], references: [id])
   song                  Albums_song[]
 
 }
@@ -89,8 +91,8 @@ model Like{
 
   //relasi
   song_id               Int           @unique
-  from_id               String        @unique
+  from_id               Int        @unique
 
   song                  Songs         @relation(fields: [song_id], references: [id])
-  from                  Users         @relation(fields: [from_id], references: [nama])
+  from                  Users         @relation(fields: [from_id], references: [id])
 }

@@ -13,7 +13,7 @@ album.post("/album_create", form_data.none(), async(req,res)=>{
         const result = await ps.albums.create({
             data : {
                 nama : data.nama,
-                user_id : data.user_id,
+                user_id : parseInt(data.user_id)
                 
             }
         })

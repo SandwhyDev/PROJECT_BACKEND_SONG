@@ -6,6 +6,7 @@ import { song } from "./routes/song_route"
 import { playlist } from "./routes/playlist"
 import { album } from "./routes/album_route"
 import { song_album } from "./routes/albumSong_route"
+import { like } from "./routes/like_route"
 env.config()
 
 const app = express()
@@ -22,6 +23,7 @@ app.use("/api", song)
 app.use("/api", playlist)
 app.use("/api", album)
 app.use("/api", song_album)
+app.use("/api", like)
 
 
 //listener
