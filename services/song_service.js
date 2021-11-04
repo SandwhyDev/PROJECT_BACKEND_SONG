@@ -8,7 +8,7 @@ const song_storage = multer.diskStorage({
     },
     filename : (req,file,cb)=>{
         
-        cb(null, Date.now() + "." + file.originalname)
+        cb(null, Date.now() + "-" + file.originalname)
     }
 })
 

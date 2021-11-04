@@ -27,3 +27,19 @@ like.post("/like_create", form_data.none(), async(req,res)=>{
         })
     }
 })
+
+like.get("/like_read_all", async(req,res)=>{
+    try {
+        const result = await ps.like.findMany()
+        res.json({
+            success : true,
+            msg : "berhasil",
+            query : result
+        })
+    } catch (error) {
+        res.json({
+            success : false,
+            error :  error.message
+        })
+    }
+})

@@ -4,10 +4,11 @@ import fs from "fs"
 import { ps } from "../prisma/connection"
 import { song_upload } from "../services/song_service"
 import { form_data } from "../services/form"
+import { verify_jwt } from "../services/jwt"
 
 export const song = express.Router()
 
-song.post("/song_create", song_upload.single("song"), async(req, res)=>{
+song.post("/song_create", verify_jwt,song_upload.single("song"), async(req, res)=>{
     try {
         const data = await req.body
         const file = await req.file

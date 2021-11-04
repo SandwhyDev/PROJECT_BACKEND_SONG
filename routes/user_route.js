@@ -1,6 +1,7 @@
 import express from "express"
 import { ps } from "../prisma/connection"
 import { form_data } from "../services/form"
+import { signJwt } from "../services/jwt"
 import { song_upload } from "../services/song_service"
 
 export const user = express.Router()
@@ -17,7 +18,11 @@ user.post("/user_create", form_data.none(), async(req,res)=>{
         res.json({
             success : true,
             msg : "berhasil",
-            query : result
+            query : result,
+            token : signJwt({
+                ...result,
+                password : "********"
+            })
         })
     } catch (error) {
         res.json({
